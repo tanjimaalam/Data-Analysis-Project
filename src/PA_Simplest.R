@@ -1,16 +1,11 @@
 # setting the work directory
-setwd('C:/SolarPanelProject/src')
+setwd('C:/SolarPanelProject/external')
 
 # importing my utils file
 source('C:/SolarPanelProject/src/utils/utils_tanjima.R')
 
-# Using the 'xlsx' library to read .xlsx (MS Excel) data files
-# The xlsx package must be installed beforehand. If you haven't installed it yet, execute:
-# install.packages("xlsx")
-# in the RStudio console.
-library('xlsx')
-
 # importing data
+
 weatherPA1 = as.data.frame(read.xlsx('Weather_PA.xlsx', 1, header=TRUE, colClasses=NA))
 # Assign a heading to the year-month-date column
 names(weatherPA1)[1] <- 'YMD'
@@ -44,8 +39,8 @@ for (i in 1:length(PA_Snow2011)) {
 # applying the repeat length element funciton on categorized data
 rleOutput = rle(PA_Snow2011_Catagorized)
 snowCount = data.frame(
-  'tana joto din' = rleOutput$lengths,
-  'snow naki na' = rleOutput$values
+  'DaysInARow' = rleOutput$lengths,
+  'SnowOrNot' = rleOutput$values
 )
 
 # sanitizing snowCount data frame
@@ -55,5 +50,15 @@ snowCount_sanitized = snowCount[complete.cases(snowCount),]
 # Assuming that it takes some days to clean the snow on the panels,
 # let's define the operating time as the period with 7 or more days
 # of no-snow (i.e. 0) in a row. Let's filter them
+# I WILL DO IT SOON
 
-
+# Exporting output file
+write.table(
+  snowCount_sanitized, 
+  'OUTPUT_snowCount_sanitized.txt',
+  append = FALSE, 
+  sep = "\t", 
+  dec = ".",
+  row.names = FALSE, 
+  col.names = TRUE
+)
