@@ -14,6 +14,7 @@ Following the professor's discussoin, the **simplest** possible model on the bas
 ## Interpretatoin of output
 For examle the first row of the output file means
 > 6 days in a row, No snow
+
 Next row means
 > 1	day it snowed.
 etc.
